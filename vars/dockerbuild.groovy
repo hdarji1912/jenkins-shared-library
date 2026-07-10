@@ -1,12 +1,12 @@
-def call(String imageName, String imageTag = "latest") {
+def call(String dockerUsername, String imageName, String imageTag = "latest") {
 
-    
+  
     echo "Building Docker Image..."
-    echo "Image Name : ${imageName}"
-    echo "Image Tag  : ${imageTag}"
+    echo "Image : ${dockerUsername}/${imageName}:${imageTag}"
+    
 
     sh """
-        docker build -t ${imageName}:${imageTag} .
+        docker build -t ${dockerUsername}/${imageName}:${imageTag} .
     """
 
     echo "Docker image built successfully."
