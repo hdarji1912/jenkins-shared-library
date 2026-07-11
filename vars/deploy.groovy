@@ -2,7 +2,7 @@ def call(String dockerUsername = "darjihardik",
          String imageName = "todo-app",
          String imageTag = "latest",
          String containerName = "todo-app",
-         String hostPort = "5001",
+         String hostPort = "5000",
          String containerPort = "5000") {
 
     echo "Deploying Docker Container..."
@@ -13,10 +13,14 @@ def call(String dockerUsername = "darjihardik",
         docker stop ${containerName} || true
         docker rm ${containerName} || true
 
+        docker container prune -f
+
         docker run -d \
-            --restart unless-stopped \
-            --name ${containerName} \
-            -p ${hostPort}:${containerPort} \
-            ${dockerUsername}/${imageName}:${imageTag}
+          --restart unless-stopped \
+          --name ${containerName} \
+          -p ${hostPort}:${containerPort} \
+          ${dockerUsername}/${imageName}:${imageTag}
     """
+
+    echo "Deployment completed successfully."
 }
