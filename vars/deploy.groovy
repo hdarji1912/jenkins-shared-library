@@ -11,14 +11,12 @@ def call(String dockerUsername = "darjihardik",
         docker pull ${dockerUsername}/${imageName}:${imageTag}
 
         docker stop ${containerName} || true
-
         docker rm ${containerName} || true
 
         docker run -d \
-          --name ${containerName} \
-          -p ${hostPort}:${containerPort} \
-          ${dockerUsername}/${imageName}:${imageTag}
+            --restart unless-stopped \
+            --name ${containerName} \
+            -p ${hostPort}:${containerPort} \
+            ${dockerUsername}/${imageName}:${imageTag}
     """
-
-    echo "Deployment completed successfully."
 }
